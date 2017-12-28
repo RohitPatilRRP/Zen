@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Stimulus</string>
+    <string name="background">background</string>
+    <string name="next_quote">Next Quote</string>
+    <string name="your_quote_goes_here">Your quote goes here!</string>
+    <string name="button">Next Quote</string>
+</resources>
