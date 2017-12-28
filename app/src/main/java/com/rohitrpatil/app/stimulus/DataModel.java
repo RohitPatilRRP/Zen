@@ -18,7 +18,7 @@ public class DataModel {
         try{
             DataModel dataModel = new DataModel();
             dataModel.mContent = jsonObject.getString("content");
-            dataModel.mAuthor = jsonObject.getJSONArray("author").getJSONObject(4).getString("name");
+            dataModel.mAuthor = jsonObject.getJSONObject("author").getString("name");
             return dataModel;
         }
         catch (JSONException e){

@@ -46,10 +46,9 @@ public class home extends AppCompatActivity {
         client.get(BASE_URL, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
-              DataModel dataModel= DataModel.fromJSON(response);
+                DataModel dataModel= DataModel.fromJSON(response);
                 mTxt.setText(dataModel.getContent());
-                Log.d( "zen","json:"+dataModel.getContent().toString());
+                Log.d( "zen","json:"+dataModel.getAuthor().toString());
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
