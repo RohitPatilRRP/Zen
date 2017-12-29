@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,21 +30,36 @@ public class home extends AppCompatActivity {
     Button mNext;
     TextView mTxt;
     TextView mAthr;
+    ImageButton mShare;
+    String shareBody;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         mTxt= (TextView)findViewById(R.id.textView3);
         mAthr= (TextView)findViewById(R.id.athr);
         mNext = (Button)findViewById(R.id.btn);
+        mShare = (ImageButton) findViewById(R.id.share);
+
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Networking();
             }
         });
-    }
 
+        mShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/pain");
+                share.putExtra(Intent.EXTRA_SUBJECT,"App By RRP");
+                share.putExtra(Intent.EXTRA_TEXT,shareBody);
+                startActivity(Intent.createChooser(share,"Share Via"));
+            }
+        });
+    }
     protected void Networking(){
         AsyncHttpClient client= new AsyncHttpClient();
         client.get(BASE_URL, new JsonHttpResponseHandler(){
@@ -51,12 +68,12 @@ public class home extends AppCompatActivity {
                 DataModel dataModel= DataModel.fromJSON(response);
                 mTxt.setText(dataModel.getContent());
                 mAthr.setText("-"+dataModel.getAuthor());
+                shareBody = dataModel.getContent() + "-" + dataModel.getAuthor();
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
                 Log.d( "zen","FAIL:"+e.toString());
-                Toast.makeText(getApplicationContext(),"Check your Internet connection.",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Check your Internet connection.", Toast.LENGTH_LONG).show();
             }
         });
     }
