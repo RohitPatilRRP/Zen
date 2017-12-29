@@ -53,7 +53,7 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("text/pain");
+                share.setType("text/plain");
                 share.putExtra(Intent.EXTRA_SUBJECT,"App By RRP");
                 share.putExtra(Intent.EXTRA_TEXT,shareBody);
                 startActivity(Intent.createChooser(share,"Share Via"));
