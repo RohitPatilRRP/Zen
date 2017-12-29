@@ -4,4 +4,5 @@
     <string name="next_quote">Next Quote</string>
     <string name="your_quote_goes_here">Your quote goes here!</string>
     <string name="button">Next Quote</string>
+    <string name="textview">Author</string>
 </resources>

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -26,12 +27,13 @@ public class home extends AppCompatActivity {
     private final String BASE_URL="https://wisdomapi.herokuapp.com/v1/random";
     Button mNext;
     TextView mTxt;
+    TextView mAthr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-         mTxt= (TextView)findViewById(R.id.textView3);
+        mTxt= (TextView)findViewById(R.id.textView3);
+        mAthr= (TextView)findViewById(R.id.athr);
         mNext = (Button)findViewById(R.id.btn);
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,11 +50,13 @@ public class home extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 DataModel dataModel= DataModel.fromJSON(response);
                 mTxt.setText(dataModel.getContent());
-                Log.d( "zen","json:"+dataModel.getAuthor().toString());
+                mAthr.setText("-"+dataModel.getAuthor());
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
                 Log.d( "zen","FAIL:"+e.toString());
+                Toast.makeText(getApplicationContext(),"Check your Internet connection.",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
