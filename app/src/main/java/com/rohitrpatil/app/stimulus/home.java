@@ -52,11 +52,17 @@ public class home extends AppCompatActivity {
         mShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("text/plain");
-                share.putExtra(Intent.EXTRA_SUBJECT,"App By RRP");
-                share.putExtra(Intent.EXTRA_TEXT,shareBody);
-                startActivity(Intent.createChooser(share,"Share Via"));
+                try {
+                    Log.d("zen", shareBody);
+                    Intent share = new Intent(Intent.ACTION_SEND);
+                    share.setType("text/plain");
+                    share.putExtra(Intent.EXTRA_SUBJECT, "App By RRP");
+                    share.putExtra(Intent.EXTRA_TEXT, shareBody);
+                    startActivity(Intent.createChooser(share, "Share Via"));
+                }
+                catch (Exception e){
+                    Toast.makeText(getApplicationContext(),"No quote available",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -68,7 +74,7 @@ public class home extends AppCompatActivity {
                 DataModel dataModel= DataModel.fromJSON(response);
                 mTxt.setText(dataModel.getContent());
                 mAthr.setText("-"+dataModel.getAuthor());
-                shareBody = dataModel.getContent() + "-" + dataModel.getAuthor();
+                shareBody = dataModel.getContent() + "-" + dataModel.getAuthor() +" ,An app by RRP";
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
